@@ -1,11 +1,9 @@
-module.exports = function(badgekitClient, userClient, syste) {
-
-  var BADGEKIT_API_SYSTEM = 'webmaker';
+module.exports = function(badgekitUserApi, userClient, system) {
 
   return function(data, cb) {
     var permissionOptions = {
       email: data.email,
-      context: { system: BADGEKIT_API_SYSTEM },
+      context: { system: system },
       permissions: { canReview: 'true' }
     };
 

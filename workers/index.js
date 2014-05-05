@@ -7,14 +7,10 @@ module.exports = function(config) {
     secret: config.secretAccessKey
   });
 
-  var badgekitClient = require("badgekit-api-client")(
-    config.badgekitApiUrl, {
-    key: config.badgekitApiKey,
-    secret: config.badgekitApiSecret
-  });
+  var badgekitUserApi = require("../lib/badgekit-user-api")(config);
 
   var userClient = new UserClient({
-    endpoint: config.loginUrlWithAuth
+    endpoint: config.LOGIN_URL_WITH_AUTH
   });
 
   return {
@@ -23,6 +19,6 @@ module.exports = function(config) {
     sign_up_for_bsd: require("./sign_up_for_bsd"),
     send_mofo_staff_email: require("./send_mofo_staff_email")(config.mofoStaffEmail, mailer),
     badge_awarded_send_email: require("./badge_awarded_send_email")(mailer),
-    supermentor_awarded_set_permissions: require("./supermentor_awarded_set_permissions")(badgekitClient, userClient)
+    supermentor_awarded_set_permissions: require("./supermentor_awarded_set_permissions")(badgekitUserApi, userClient, config.BADGEKIT_SYSTEM)
   };
 };
